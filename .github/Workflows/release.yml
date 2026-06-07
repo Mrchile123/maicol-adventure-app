@@ -1,0 +1,50 @@
+name: Generar APK de Toda la Vida
+
+on:
+  push:
+    tags:
+      - 'v*' # Esto hace que el robot trabaje solo cuando creas una versión (ej: v1.0)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 1. Descargar tu código de GitHub
+      uses: actions/checkout@v4
+
+    - name: 2. Configurar Node.js (Para Capacitor)
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: 3. Configurar Java (Obligatorio para Android)
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    - name: 4. Instalar Capacitor y dependencias
+      run: npm install
+
+    - name: 5. Crear la base nativa de Android
+      run: npx cap add android
+
+    - name: 6. Meter tu HTML/CSS/JS dentro de Android
+      run: npx cap sync android
+
+    - name: 7. Dar permisos al compilador de Android
+      run: chmod +x ./android/gradlew
+
+    - name: 8. Compilar y fabricar la APK
+      run: |
+        cd android
+        ./gradlew assembleDebug
+
+    - name: 9. Publicar la APK en la pestaña Releases de GitHub
+      uses: softprops/action-gh-release@v2
+      with:
+        files: android/app/build/outputs/apk/debug/app-debug.apk
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
