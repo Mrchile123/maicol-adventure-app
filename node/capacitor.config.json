@@ -1,9 +1,0 @@
-{
-  "appId": "com.KingEnterprise.Maapp",
-  "appName": "Maicol adventure: the app",
-  "webDir": "www",
-  "bundledWebRuntime": false,
-  "android": {
-    "screenOrientation": "landscape"
-  }
-}
