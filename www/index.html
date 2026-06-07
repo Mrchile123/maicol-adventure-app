@@ -3,37 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maicol adventure: the app</title>
+    <title>Kadventure - Menu Estilo Netflix</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="main-container">
-        <header>
-            <img src="../Temporadas.png" alt="Banner App" class="app-banner">
-            <h1>Maicol adventure: the app</h1>
-        </header>
+    <header class="navbar">
+        <div class="logo">Kinventure</div>
+        <nav class="nav-links">
+            <button class="nav-btn active" onclick="switchSection('series', this)">Series / Spin-off</button>
+            <button class="nav-btn" onclick="switchSection('info', this)">Información</button>
+            <button class="nav-btn" onclick="switchSection('mas', this)">Más</button>
+        </nav>
+    </header>
 
-        <section class="row">
-            <h2>Temporadas</h2>
-            <div class="grid" id="temporadas-grid">
-                <button class="card" data-temp="1" id="btn-temp1">
-                    <img src="../Temporada 1.png" alt="Temporada 1">
-                    <span>Temporada 1</span>
-                </button>
-                <button class="card" data-temp="2" id="btn-temp2">
-                    <img src="../Temporada 2.png" alt="Temporada 2">
-                    <span>Temporada 2</span>
-                </button>
+    <main id="section-series" class="main-content content-section active">
+        
+        <section class="slider-container">
+            <h2 class="slider-title">Temporada 1</h2>
+            <div class="slider-wrapper">
+                <button class="arrow-btn left-arrow" onclick="scrollSlider('t1', -1)">&#10094;</button>
+                <div id="slider-t1" class="slider-row">
+                    </div>
+                <button class="arrow-btn right-arrow" onclick="scrollSlider('t1', 1)">&#10095;</button>
             </div>
         </section>
 
-        <section class="row">
-            <h2 id="episodios-titulo">Episodios</h2>
-            <div class="grid" id="episodios-grid">
-                </div>
+        <section class="slider-container">
+            <h2 class="slider-title">Temporada 2</h2>
+            <div class="slider-wrapper">
+                <button class="arrow-btn left-arrow" onclick="scrollSlider('t2', -1)">&#10094;</button>
+                <div id="slider-t2" class="slider-row">
+                    </div>
+                <button class="arrow-btn right-arrow" onclick="scrollSlider('t2', 1)">&#10095;</button>
+            </div>
         </section>
+
+    </main>
+
+    <section id="section-info" class="main-content content-section">
+        <div class="info-card">
+            <h1>Kinventure: Recover the Crown</h1>
+            <p class="subtitle">Serie Animada Oficial</p>
+            <div class="info-body">
+                <p>Bienvenido al hub oficial de la serie. Sigue la gran aventura paso a paso en busca de la corona perdida. Esta aplicación reúne de forma optimizada todos los episodios de la Temporada 1 y la Temporada 2.</p>
+                <p><strong>Detalles del proyecto:</strong> Desarrollado inicialmente usando herramientas de animación y compilado para dispositivos móviles gracias a la infraestructura web moderna.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-mas" class="main-content content-section">
+        <div class="more-card">
+            <h2>Enlaces y Redes Oficiales</h2>
+            <p>Accede directamente al contenido de respaldo y soporte técnico de la comunidad.</p>
+            <div class="links-grid">
+                <a href="https://youtube.com/@king-orange123-k6m" target="_blank" class="external-link">
+                    Canal de Respaldo de YouTube
+                </a>
+                <a href="https://github.com/Mrchile" target="_blank" class="external-link github-btn">
+                    Repositorio GitHub (Mrchile)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div id="video-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePlayer()">&times; Cerrar</button>
+            <h3 id="modal-video-title" class="modal-title">Reproduciendo...</h3>
+            <div class="video-wrapper">
+                <video id="main-video-player" controls autoplay playsinline>
+                    Tu navegador no soporta reproducción de video nativo.
+                </video>
+            </div>
+        </div>
     </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
     <div id="video-player-container" class="hidden">
         <button class="close-video-btn" id="btn-close-video">✕</button>
