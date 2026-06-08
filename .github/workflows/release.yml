@@ -27,30 +27,23 @@ jobs:
     - name: 4. Instalar dependencias del proyecto
       run: npm install
 
-    - name: 5. Generar Iconos Automáticos desde Icon_app.png
-      run: |
-        # Instala la herramienta de recursos oficial de Capacitor
-        npm install @capacitor/assets --save-dev
-        # Genera automáticamente todos los tamaños requeridos por Android
-        npx capacitor-assets generate --android --icon-source Icon_app.png
-
-    - name: 6. Crear la base nativa de Android
+    - name: 5. Crear la base nativa de Android
       run: npx cap add android || true # Evita fallas si la carpeta nativa ya existía
 
-    - name: 7. Inyectar código Web e imágenes en Android
+    - name: 6. Inyectar código Web e imágenes en Android
       run: npx cap sync android
 
-    - name: 8. Dar permisos al compilador de Android
+    - name: 7. Dar permisos al compilador de Android
       run: chmod +x ./android/gradlew
 
-    - name: 9. Compilar y fabricar la APK
+    - name: 8. Compilar y fabricar la APK
       run: |
         cd android
         ./gradlew assembleDebug
 
-    - name: 10. Publicar la APK en la pestaña Releases de GitHub
+    - name: 9. Publicar la APK en la pestaña Releases de GitHub
       uses: softprops/action-gh-release@v2
       with:
-        files: android/app/build/outputs/apk/debug/Maicol-adventure-app.apk
+        files: android/app/build/outputs/apk/debug/app-debug.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
