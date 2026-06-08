@@ -1,7 +1,7 @@
-// BASE DE DATOS DE EPISODIOS ASOCIANDO CADA MP4 CON SU PNG
+// BASE DE DATOS CORREGIDA AL 100% CON TUS CAPTURAS REALES DE REPOSITORIO
 const episodiosData = {
     T1: [
-        { title: "Episodio 1", file: "Temporada1/Ep 1 T1.mp4", thumb: "Temporada1/Ep 1 T1.png" },
+        { title: "Episodio 1", file: "Temporada1/Ep 1 T1.mp4", thumb: "Temporada1/Ep 1 t1.png" },
         { title: "Episodio 2", file: "Temporada1/Ep 2 t1.mp4", thumb: "Temporada1/Ep 2 t1.png" },
         { title: "Episodio 3", file: "Temporada1/Ep 3 t1.mp4", thumb: "Temporada1/Ep 3 t1.png" },
         { title: "Episodio 4", file: "Temporada1/Ep 4 t1.mp4", thumb: "Temporada1/Ep 4 t1.png" },
@@ -17,8 +17,8 @@ const episodiosData = {
         { title: "Episodio 2", file: "Temporada2/Ep 2 t2.mp4", thumb: "Temporada2/Ep 2 t2.png" },
         { title: "Episodio 3", file: "Temporada2/Ep 3 t2.mp4", thumb: "Temporada2/Ep 3 t2.png" },
         { title: "Episodio 4", file: "Temporada2/Ep 4 t2.mp4", thumb: "Temporada2/Ep 4 t2.png" },
-        { title: "Episodio 5", file: "Temporada2/Ep 5 T2.mp4", thumb: "Temporada2/Ep 5 T2.png" },
-        { title: "Episodio 6", file: "Temporada2/Ep 6 T2.mp4", thumb: "Temporada2/Ep 6 T2.png" },
+        { title: "Episodio 5", file: "Temporada2/Ep 5 T2.mp4", thumb: "Temporada2/Ep 5 t2.png" },
+        { title: "Episodio 6", file: "Temporada2/Ep 6 T2.mp4", thumb: "Temporada2/Ep 6 t2.png" },
         { title: "Episodio 7", file: "Temporada2/Ep 7 t2.mp4", thumb: "Temporada2/Ep 7 t2.png" }
     ]
 };
@@ -69,7 +69,7 @@ function scrollEpisodes(direction) {
     }
 }
 
-// CONTROL DE VENTANAS EMERGEN_TES "PRÓXIMAMENTE"
+// CONTROL DE VENTANAS EMERGENTES "PRÓXIMAMENTE"
 function showUpcomingModal(title) {
     document.getElementById('upcoming-title').innerText = title;
     document.getElementById('upcoming-modal').style.display = 'block';
