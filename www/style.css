@@ -1,3 +1,4 @@
+/* CONFIGURACIÓN GENERAL */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -12,15 +13,11 @@ body {
     padding-top: 70px;
 }
 
-/* BARRA DE NAVEGACIÓN SUPERIOR */
+/* NAVBAR */
 .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
+    top: 0; left: 0; width: 100%; height: 70px;
     background-color: #141414;
-    display: block;
     padding: 0 4%;
     z-index: 1000;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -32,7 +29,218 @@ body {
     font-weight: bold;
     float: left;
     line-height: 70px;
-    letter-spacing: 0.5px;
+}
+
+.nav-links {
+    float: right;
+    line-height: 70px;
+}
+
+.nav-btn {
+    background: none; border: none;
+    color: #b3b3b3; font-size: 11pt; font-weight: bold;
+    margin-left: 15px; cursor: pointer;
+    transition: color 0.3s; padding: 5px 10px;
+}
+
+.nav-btn:hover, .nav-btn.active { color: #ffffff; }
+
+.content-section { display: none; }
+.content-section.active { display: block; }
+.main-content { padding: 20px 4%; }
+
+.section-instruction {
+    color: #aaa; font-size: 11pt; margin-bottom: 20px;
+}
+
+/* GRILLA DE CATÁLOGO (RESPONSIVA PARA TELÉFONOS) */
+.grid-series {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.main-series-card {
+    position: relative;
+    background-color: #1f1f1f;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-series-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(229,9,20,0.2);
+}
+
+.poster-img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+}
+
+.card-title-footer {
+    padding: 10px;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #1c1c1c;
+    color: #eee;
+    border-top: 1px solid #2a2a2a;
+}
+
+/* CAPA HOVER PARA LOS PÓSTERS */
+.poster-hover-layer {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: calc(100% - 37px);
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.main-series-card:hover .poster-hover-layer { opacity: 1; }
+.play-icon, .lock-icon { font-size: 24pt; margin-bottom: 5px; }
+.lock-icon { color: #ffaa00; }
+.poster-status-txt { font-size: 10pt; font-weight: bold; color: #fff; }
+
+/* MODAL DE TEMPORADAS (ESTILO NETFLIX) */
+.series-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.92);
+    z-index: 1500;
+}
+
+.series-modal-content {
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 92%; max-width: 850px;
+    background-color: #181818;
+    border-radius: 8px; padding: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+.close-series-modal {
+    background-color: #e50914; color: #fff; border: none;
+    padding: 6px 14px; border-radius: 4px; cursor: pointer;
+    float: right; font-weight: bold; font-size: 11pt;
+}
+
+.series-modal-title { font-size: 18pt; margin-bottom: 15px; color: #fff; }
+
+.season-selector-container { margin-bottom: 15px; }
+.season-label { font-size: 10pt; color: #aaa; margin-right: 10px; }
+.season-dropdown {
+    background-color: #242424; color: #fff; font-size: 11pt;
+    padding: 6px 12px; border: 1px solid #444; border-radius: 4px;
+    cursor: pointer; font-weight: bold;
+}
+
+/* FILA DE EPISODIOS EN EL PANEL INTERNO */
+.episodes-slider-wrapper { position: relative; width: 100%; }
+.episodes-row {
+    display: block; white-space: nowrap;
+    overflow-x: auto; overflow-y: hidden;
+    scroll-behavior: smooth; padding: 10px 0;
+}
+.episodes-row::-webkit-scrollbar { display: none; }
+
+.episode-thumb-card {
+    display: inline-block;
+    width: 240px; height: 135px; /* Proporción limpia 16:9 para las miniaturas */
+    background-color: #000; margin-right: 12px;
+    border-radius: 4px; overflow: hidden; position: relative;
+    cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
+}
+.episode-thumb-card:hover { transform: scale(1.03); }
+
+.thumb-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; }
+.episode-thumb-card:hover .thumb-img { opacity: 1; }
+
+.episode-meta-overlay {
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%);
+    padding: 8px;
+}
+.ep-tag { font-size: 8pt; color: #e50914; font-weight: bold; }
+.ep-title { font-size: 10pt; font-weight: bold; color: #fff; margin-top: 1px; }
+
+.slider-arrow {
+    position: absolute; top: 0; bottom: 0; width: 35px;
+    background-color: rgba(0,0,0,0.7); border: none; color: #fff;
+    font-size: 14pt; cursor: pointer; z-index: 5;
+}
+.arrow-left { left: 0; border-radius: 0 4px 4px 0; }
+.arrow-right { right: 0; border-radius: 4px 0 0 4px; }
+
+/* REPRODUCIDOR MODAL */
+.modal {
+    display: none; position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #000; z-index: 2000;
+}
+.modal-content {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 100%; max-width: 900px; background-color: #000; padding: 10px;
+}
+.close-modal {
+    background-color: #e50914; color: #fff; border: none;
+    padding: 8px 14px; font-weight: bold; border-radius: 4px;
+    float: right; cursor: pointer; margin-bottom: 10px;
+}
+.modal-title { font-size: 11pt; margin-bottom: 10px; color: #aaa; clear: both; }
+.video-wrapper { position: relative; width: 100%; padding-top: 56.25%; }
+.video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; }
+
+/* MODAL DE PROXIMAMENTE */
+.upcoming-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 1600;
+}
+.upcoming-content {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background-color: #222; border-radius: 6px; padding: 25px;
+    width: 85%; max-width: 400px; text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    border: 1px solid #333;
+}
+.upcoming-badge {
+    background-color: #ffaa00; color: #000; font-size: 8pt;
+    font-weight: bold; padding: 3px 8px; border-radius: 3px;
+    display: inline-block; margin-bottom: 10px;
+}
+.upcoming-content h3 { font-size: 14pt; margin-bottom: 10px; color: #fff; }
+.upcoming-content p { font-size: 10pt; color: #ccc; line-height: 1.4; margin-bottom: 20px; }
+.close-upcoming-btn {
+    background-color: #fff; color: #000; border: none; font-weight: bold;
+    padding: 8px 20px; border-radius: 4px; cursor: pointer; font-size: 10pt;
+}
+.close-upcoming-btn:hover { background-color: #e50914; color: #fff; }
+
+/* CONTENEDORES INFORMATIVOS */
+.info-card, .more-card {
+    background-color: #1c1c1c; padding: 25px; border-radius: 6px;
+    max-width: 650px; margin: 15px auto; border: 1px solid #2d2d2d;
+}
+.subtitle { color: #808080; font-style: italic; margin-bottom: 10px; }
+.info-body p { font-size: 11pt; color: #d3d3d3; margin-bottom: 10px; }
+.external-link {
+    display: inline-block; background-color: #e50914; color: white;
+    text-decoration: none; padding: 10px 15px; border-radius: 4px; font-weight: bold;
 }
 
 .nav-links {
