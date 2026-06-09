@@ -1,6 +1,6 @@
 {
   "name": "maicol-adventure-the-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "La app oficial de la serie Maicol Adventure",
   "main": "index.js",
   "scripts": {
