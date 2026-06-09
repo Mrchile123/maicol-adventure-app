@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Maicol Adventure Network</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,49 +12,34 @@
         <div class="logo">Maicol Adventure</div>
         <nav class="nav-links">
             <button class="nav-btn active" onclick="switchSection('series', this)">Series / Spin-off</button>
-            <button class="nav-btn" onclick="switchSection('info', this)">Información</button>
+            <button class="nav-btn" onclick="switchSection('fanarts', this)">Fan-Arts</button>
             <button class="nav-btn" onclick="switchSection('releases', this)">Releases</button>
+            <button class="nav-btn" onclick="switchSection('info', this)">Información</button>
             <button class="nav-btn" onclick="switchSection('mas', this)">Redes</button>
         </nav>
     </header>
 
     <main id="section-series" class="main-content content-section active">
-        <p class="section-instruction">Selecciona un título para desplegar su contenido:</p>
+        <p class="section-instruction">Selecciona un título para desplegar sus episodios:</p>
         
-        <div class="grid-series">
-            <div class="main-series-card" onclick="openSeriesMenu('Maicol Adventure')">
-                <img src="poster-Maicol-adventure.png" alt="Maicol Adventure" class="poster-img">
-                <div class="poster-hover-layer">
-                    <span class="play-icon">▶</span>
-                    <p class="poster-status-txt">Ver Serie</p>
-                </div>
+        <div class="fixed-poster-grid">
+            <div class="poster-item" onclick="openSeriesMenu('Maicol Adventure')">
+                <img src="poster-Maicol-adventure.png" alt="Maicol Adventure" class="fixed-poster-img">
                 <div class="card-title-footer">Maicol Adventure</div>
             </div>
 
-            <div class="main-series-card upcoming" onclick="showUpcomingModal('Maicol Adventure: Kingventure')">
-                <img src="poster-kingventure.png" alt="Kingventure" class="poster-img">
-                <div class="poster-hover-layer">
-                    <span class="lock-icon">🔒</span>
-                    <p class="poster-status-txt">Próximamente</p>
-                </div>
+            <div class="poster-item upcoming" onclick="showUpcomingModal('Kingventure')">
+                <img src="poster-kingventure.png" alt="Kingventure" class="fixed-poster-img">
                 <div class="card-title-footer">Kingventure</div>
             </div>
 
-            <div class="main-series-card upcoming" onclick="showUpcomingModal('Maicol Adventure Comic')">
-                <img src="poster-Maicoladventurecomic.png" alt="Maicol Adventure Comic" class="poster-img">
-                <div class="poster-hover-layer">
-                    <span class="lock-icon">🔒</span>
-                    <p class="poster-status-txt">Próximamente</p>
-                </div>
+            <div class="poster-item upcoming" onclick="showUpcomingModal('Maicol Adventure Comic')">
+                <img src="poster-Maicoladventurecomic.png" alt="Maicol Adventure Comic" class="fixed-poster-img">
                 <div class="card-title-footer">Comic</div>
             </div>
 
-            <div class="main-series-card upcoming" onclick="showUpcomingModal('Maicol Mini Adventure')">
-                <img src="Maicol-Mini-Adventure-poster.png" alt="Maicol Mini Adventure" class="poster-img">
-                <div class="poster-hover-layer">
-                    <span class="lock-icon">🔒</span>
-                    <p class="poster-status-txt">Próximamente</p>
-                </div>
+            <div class="poster-item upcoming" onclick="showUpcomingModal('Maicol Mini Adventure')">
+                <img src="Maicol-Mini-Adventure-poster.png" alt="Mini Adventure" class="fixed-poster-img">
                 <div class="card-title-footer">Mini Adventure</div>
             </div>
         </div>
@@ -74,51 +59,48 @@
             </div>
 
             <div class="episodes-slider-wrapper">
-                <button class="slider-arrow arrow-left" onclick="scrollEpisodes(-1)">&#10094;</button>
                 <div id="episodes-container-row" class="episodes-row">
                     </div>
-                <button class="slider-arrow arrow-right" onclick="scrollEpisodes(1)">&#10095;</button>
             </div>
         </div>
     </div>
 
+    <section id="section-fanarts" class="content-section iframe-section-container">
+        <iframe src="https://sites.google.com/view/fanartspage/p%C3%A1gina-principal" class="embedded-web-view" allowfullscreen></iframe>
+    </section>
+
+    <section id="section-releases" class="content-section iframe-section-container">
+        <iframe src="https://github.com/Mrchile123/maicol-adventure-app/releases" class="embedded-web-view" allowfullscreen></iframe>
+    </section>
+
     <div id="upcoming-modal" class="upcoming-modal">
         <div class="upcoming-content">
-            <span class="upcoming-badge">AVISO</span>
+            <span class="upcoming-badge">🔒 PRÓXIMAMENTE</span>
             <h3 id="upcoming-title">Título del Proyecto</h3>
-            <p>Este proyecto se encuentra actualmente en fase de desarrollo o edición de animación. ¡Estará disponible próximamente en tu app!</p>
+            <p>Este proyecto se encuentra actualmente en fase de desarrollo de animación o edición. ¡Estará disponible próximamente en tu app!</p>
             <button class="close-upcoming-btn" onclick="closeUpcomingModal()">Entendido</button>
         </div>
     </div>
 
     <section id="section-info" class="main-content content-section">
         <div class="info-card">
-            <h1>Maicol Adventure Hub</h1>
-            <p class="subtitle">Detrás de cámaras del proyecto animado</p>
+            <h1>Maicol Adventure Hub Oficial</h1>
+            <p class="subtitle">Detrás de cámaras y contacto del proyecto</p>
             <div class="info-body">
-                <h3>Estilo de Animación</h3>
+                <h3>Estilo de Animación Artesanal</h3>
                 <p>Está realizada de forma artesanal utilizando la aplicación FlipaClip, mostrando un estilo de dibujos sencillos, caricaturescos y dinámicos.</p>
                 
-                <h3>Trama y Personajes</h3>
-                <p>Las historias suelen girar en torno a Maicol y sus amigos (como Carlos o Samuel), quienes se enfrentan a situaciones cómicas, misteriosas o de acción. En episodios como "La remodelación", los personajes lian con misiones absurdas, como recuperar una galleta Oreo o terminar siendo lanzados accidentalmente al espacio.</p>
-                
                 <h3>Producción y Voces</h3>
-                <p>Todo el proyecto posee un enfoque sumamente personal. Como se muestra en los créditos del contenido, el propio Maicol se encarga de la creación completa, el desarrollo de la historia y de aportar las voces para los distintos personajes del proyecto.</p>
+                <p>Como se muestra en los créditos, el propio Maicol se encarga de la creación completa, el desarrollo de la historia y de aportar las voces para los distintos personajes del proyecto.</p>
                 
-                <p class="highlight-info-text">Puedes explorar los episodios directamente en el canal de YouTube de <strong>Hola soy king orange</strong>.</p>
+                <div class="highlight-info-text">Puedes explorar los episodios directamente en el canal de YouTube de <strong>Hola soy king orange</strong>.</div>
             </div>
-        </div>
-    </section>
-
-    <section id="section-releases" class="main-content content-section">
-        <div class="releases-card">
-            <h2>Pestaña Oficial de Descargas</h2>
-            <p class="subtitle">Repositorio de compilaciones de la aplicación</p>
-            <div class="releases-body">
-                <p>Mantén tu aplicación actualizada con las últimas funciones incorporadas, corrección de reproductores y nuevos menús interactivos.</p>
-                <p>Cada actualización se publica de manera formal y segura en la sección de lanzamientos de GitHub.</p>
-                <a href="https://github.com/Mrchile123/maicol-adventure-app/releases" target="_blank" class="release-action-btn">
-                    🚀 Ir a GitHub Releases
+            
+            <div class="contact-info-block">
+                <h3>Soporte y Contacto</h3>
+                <p>Si tienes problemas técnicos con la app o quieres enviarme una idea, escríbeme a:</p>
+                <a href="mailto:maicolsquadbuster@gmail.com" class="contact-email-btn">
+                    📧 maicolsquadbuster@gmail.com
                 </a>
             </div>
         </div>
@@ -127,117 +109,28 @@
     <section id="section-mas" class="main-content content-section">
         <div class="more-card">
             <h2>Canales y Redes Oficiales</h2>
-            <p class="subtitle">Sigue todo el contenido en plataformas comunitarias</p>
+            <p class="subtitle">Sigue todo el contenido multimedia</p>
             <div class="links-grid">
-                <a href="https://youtube.com/@king-orange123-k6m?si=jeBlJip_n8Sw6z7Z" target="_blank" class="social-link yt">
-                    <span class="icon-media">📺</span> YouTube (Hola soy king orange)
-                </a>
-                <a href="https://www.tiktok.com/@hola_soy_king_orange_off?_r=1&_t=ZS-971uD3Df0F7" target="_blank" class="social-link tt">
-                    <span class="icon-media">🎵</span> TikTok Oficial
-                </a>
-                <a href="https://www.facebook.com/share/1Cv9Jdg3JL/" target="_blank" class="social-link fb">
-                    <span class="icon-media">🌐</span> Facebook Page
-                </a>
+                <a href="https://youtube.com/@king-orange123-k6m?si=jeBlJip_n8Sw6z7Z" target="_blank" class="social-link yt">📺 YouTube (King Orange)</a>
+                <a href="https://www.tiktok.com/@hola_soy_king_orange_off" target="_blank" class="social-link tt">🎵 TikTok Oficial</a>
+                <a href="https://www.facebook.com/share/1Cv9Jdg3JL/" target="_blank" class="social-link fb">🌐 Facebook Page</a>
             </div>
         </div>
     </section>
 
     <div id="video-modal" class="modal">
         <div class="modal-content">
-            <button class="close-modal" onclick="closePlayer()">&times; Cerrar</button>
-            <h3 id="modal-video-title" class="modal-title">Cargando...</h3>
-            <div class="video-wrapper">
-                <video id="main-video-player" controls autoplay playsinline></video>
+            <div class="player-header-controls">
+                <h3 id="modal-video-title" class="modal-title">Cargando...</h3>
+                <button class="close-modal" onclick="closePlayer()">&times; Cerrar</button>
             </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-                    <p class="poster-status-txt">Próximamente</p>
-                </div>
-                <div class="card-title-footer">Kingventure</div>
-            </div>
-
-            <div class="main-series-card upcoming" onclick="showUpcomingModal('Maicol Adventure Comic')">
-                <img src="poster-Maicoladventurecomic.png" alt="Maicol Adventure Comic" class="poster-img">
-                <div class="poster-hover-layer">
-                    <span class="lock-icon">🔒</span>
-                    <p class="poster-status-txt">Próximamente</p>
-                </div>
-                <div class="card-title-footer">Comic</div>
-            </div>
-
-            <div class="main-series-card upcoming" onclick="showUpcomingModal('Maicol Mini Adventure')">
-                <img src="Maicol-Mini-Adventure-poster.png" alt="Maicol Mini Adventure" class="poster-img">
-                <div class="poster-hover-layer">
-                    <span class="lock-icon">🔒</span>
-                    <p class="poster-status-txt">Próximamente</p>
-                </div>
-                <div class="card-title-footer">Mini Adventure</div>
-            </div>
-        </div>
-    </main>
-
-    <div id="series-menu-modal" class="series-modal">
-        <div class="series-modal-content">
-            <button class="close-series-modal" onclick="closeSeriesMenu()">&times; Volver</button>
-            <h2 id="modal-series-title" class="series-modal-title">Maicol Adventure</h2>
             
-            <div class="season-selector-container">
-                <label for="season-select" class="season-label">Temporada:</label>
-                <select id="season-select" class="season-dropdown" onchange="changeSeason(this.value)">
-                    <option value="T1">Temporada 1</option>
-                    <option value="T2">Temporada 2</option>
-                </select>
-            </div>
-
-            <div class="episodes-slider-wrapper">
-                <button class="slider-arrow arrow-left" onclick="scrollEpisodes(-1)">&#10094;</button>
-                <div id="episodes-container-row" class="episodes-row">
-                    </div>
-                <button class="slider-arrow arrow-right" onclick="scrollEpisodes(1)">&#10095;</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="upcoming-modal" class="upcoming-modal">
-        <div class="upcoming-content">
-            <span class="upcoming-badge">AVISO</span>
-            <h3 id="upcoming-title">Título del Proyecto</h3>
-            <p>Este proyecto se encuentra actualmente en fase de desarrollo o edición de animación. ¡Estará disponible próximamente en tu app!</p>
-            <button class="close-upcoming-btn" onclick="closeUpcomingModal()">Entendido</button>
-        </div>
-    </div>
-
-    <section id="section-info" class="main-content content-section">
-        <div class="info-card">
-            <h1>Maicol Adventure Hub</h1>
-            <p class="subtitle">Ecosistema Multimedia Animado</p>
-            <div class="info-body">
-                <p>Esta aplicación reúne el multiverso de animaciones de Maicol Adventure de forma optimizada para dispositivos móviles mediante Capacitor.</p>
-                <p>Navega a través del menú de lanzamientos principales o consulta los próximos estrenos en la pestaña principal de Series.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="section-mas" class="main-content content-section">
-        <div class="more-card">
-            <h2>Enlaces Comunitarios</h2>
-            <div class="links-grid">
-                <a href="https://youtube.com/@king-orange123-k6m" target="_blank" class="external-link">Canal de Respaldo YouTube</a>
-                <a href="https://github.com/Mrchile" target="_blank" class="external-link github-btn">Perfil de GitHub</a>
-            </div>
-        </div>
-    </section>
-
-    <div id="video-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closePlayer()">&times; Cerrar</button>
-            <h3 id="modal-video-title" class="modal-title">Cargando...</h3>
             <div class="video-wrapper">
-                <video id="main-video-player" controls autoplay playsinline></video>
+                <video id="main-video-player" controls autoplay playsinline autopictureinpicture pip="true"></video>
+                
+                <button id="next-episode-btn" class="netflix-next-btn" onclick="playNextEpisode()">
+                    Siguiente Episodio ⏭️
+                </button>
             </div>
         </div>
     </div>
@@ -245,62 +138,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-                <div id="slider-t1" class="slider-row">
-                    </div>
-                <button class="arrow-btn right-arrow" onclick="scrollSlider('t1', 1)">&#10095;</button>
-            </div>
-        </section>
-
-        <section class="slider-container">
-            <h2 class="slider-title">Temporada 2</h2>
-            <div class="slider-wrapper">
-                <button class="arrow-btn left-arrow" onclick="scrollSlider('t2', -1)">&#10094;</button>
-                <div id="slider-t2" class="slider-row">
-                    </div>
-                <button class="arrow-btn right-arrow" onclick="scrollSlider('t2', 1)">&#10095;</button>
-            </div>
-        </section>
-
-    </main>
-
-    <section id="section-info" class="main-content content-section">
-        <div class="info-card">
-            <h1>Maicol Adventure: Recover the Crown</h1>
-            <p class="subtitle">Serie Animada de Animación Híbrida</p>
-            <div class="info-body">
-                <p>Bienvenido al concentrador oficial de la serie. Sigue las crónicas y batallas de Maicol en este software adaptado para smartphones.</p>
-                <p>La producción cuenta con un desarrollo móvil optimizado utilizando componentes nativos web gracias al ecosistema de Capacitor, empaquetando tus videos favoritos directamente en una app fluida.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="section-mas" class="main-content content-section">
-        <div class="more-card">
-            <h2>Enlaces y Canales Comunitarios</h2>
-            <p>Accede de inmediato a tus redes y repositorios seguros.</p>
-            <div class="links-grid">
-                <a href="https://youtube.com/@king-orange123-k6m" target="_blank" class="external-link">
-                    Canal de Respaldo YouTube
-                </a>
-                <a href="https://github.com/Mrchile" target="_blank" class="external-link github-btn">
-                    Perfil de GitHub (Mrchile)
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <div id="video-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closePlayer()">&times; Cerrar Video</button>
-            <h3 id="modal-video-title" class="modal-title">Cargando aventura...</h3>
-            <div class="video-wrapper">
-                <video id="main-video-player" controls autoplay playsinline>
-                    Tu dispositivo no soporta reproducción de video integrada.
-                </video>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html></html>
