@@ -11,6 +11,7 @@ body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     overflow-x: hidden;
     padding-top: 70px;
+    height: 100vh;
 }
 
 /* NAVBAR */
@@ -45,7 +46,7 @@ body {
 
 .nav-btn:hover, .nav-btn.active { color: #ffffff; }
 
-.content-section { display: none; }
+.content-section { display: none; height: calc(100vh - 70px); }
 .content-section.active { display: block; }
 .main-content { padding: 20px 4%; }
 
@@ -53,428 +54,149 @@ body {
     color: #aaa; font-size: 11pt; margin-bottom: 20px;
 }
 
-/* GRILLA DE CATÁLOGO */
-.grid-series {
+/* --- NUEVA GRILLA FIJA DE PÓSTERS (SOLUCIÓN AL ZOOM GIGANTE) --- */
+.fixed-poster-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    /* Define columnas con tamaño fijo para evitar el zoom gigante */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 160px));
     gap: 20px;
     padding: 10px 0;
+    justify-content: center; /* Centra los pósters en la pantalla */
+    overflow-y: auto; /* Permite scroll vertical interno si hay muchos */
+    max-height: calc(100vh - 150px);
 }
 
-.main-series-card {
-    position: relative;
-    background-color: #1f1f1f;
+.poster-item {
+    background-color: #1c1c1c;
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
     display: flex;
     flex-direction: column;
 }
 
-.main-series-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(229,9,20,0.2);
+.poster-item:hover {
+    transform: scale(1.04);
 }
 
-.poster-img {
+/* Arreglo de Imagen Fija */
+.fixed-poster-img {
     width: 100%;
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 2 / 3; /* Mantiene la proporción vertical perfecta */
     object-fit: cover;
+    display: block;
 }
 
 .card-title-footer {
-    padding: 10px;
-    font-size: 10pt;
+    padding: 8px;
+    font-size: 9.5pt;
     font-weight: bold;
     text-align: center;
     background-color: #1c1c1c;
     color: #eee;
     border-top: 1px solid #2a2a2a;
+    min-height: 38px;
+    display: flex; align-items: center; justify-content: center;
 }
 
-.poster-hover-layer {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: calc(100% - 37px);
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.main-series-card:hover .poster-hover-layer { opacity: 1; }
-.play-icon, .lock-icon { font-size: 24pt; margin-bottom: 5px; }
-.lock-icon { color: #ffaa00; }
-.poster-status-txt { font-size: 10pt; font-weight: bold; color: #fff; }
-
-/* MODAL DE TEMPORADAS (ESTILO NETFLIX) */
-.series-modal {
-    display: none;
-    position: fixed;
+/* MODALES GENERALES (SINOPSIS Y TEMPORADAS) */
+.series-modal, .modal, .upcoming-modal {
+    display: none; position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.92);
+    background-color: rgba(0,0,0,0.95);
     z-index: 1500;
 }
 
 .series-modal-content {
-    position: absolute;
-    top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 92%; max-width: 850px;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 90%; max-width: 850px;
     background-color: #181818;
     border-radius: 8px; padding: 20px;
     box-shadow: 0 0 20px rgba(0,0,0,0.8);
 }
 
-.close-series-modal {
+.close-series-modal, .close-modal, .close-upcoming-btn {
     background-color: #e50914; color: #fff; border: none;
-    padding: 6px 14px; border-radius: 4px; cursor: pointer;
-    float: right; font-weight: bold; font-size: 11pt;
+    padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold;
 }
-
-.series-modal-title { font-size: 18pt; margin-bottom: 15px; color: #fff; }
 
 .season-selector-container { margin-bottom: 15px; }
-.season-label { font-size: 10pt; color: #aaa; margin-right: 10px; }
 .season-dropdown {
-    background-color: #242424; color: #fff; font-size: 11pt;
-    padding: 6px 12px; border: 1px solid #444; border-radius: 4px;
-    cursor: pointer; font-weight: bold;
+    background-color: #242424; color: #fff; padding: 6px 12px;
+    border: 1px solid #444; border-radius: 4px; font-weight: bold;
 }
 
-/* CARDS INTERNAS DE LOS EPISODIOS */
+/* CARDS INTERNAS DE EPISODIOS */
 .episodes-slider-wrapper { position: relative; width: 100%; }
 .episodes-row {
-    display: block; white-space: nowrap;
-    overflow-x: auto; overflow-y: hidden;
-    scroll-behavior: smooth; padding: 10px 0;
+    display: flex; flex-direction: row; gap: 12px;
+    overflow-x: auto; scroll-behavior: smooth; padding: 10px 0;
 }
 .episodes-row::-webkit-scrollbar { display: none; }
 
 .episode-thumb-card {
-    display: inline-block;
-    width: 240px; height: 135px;
-    background-color: #000; margin-right: 12px;
-    border-radius: 4px; overflow: hidden; position: relative;
-    cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-    transition: transform 0.2s;
+    flex: 0 0 220px;
+    height: 124px;
+    background-color: #000; border-radius: 4px; overflow: hidden;
+    position: relative; cursor: pointer;
 }
-.episode-thumb-card:hover { transform: scale(1.03); }
 
-.thumb-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; }
+.thumb-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
 .episode-thumb-card:hover .thumb-img { opacity: 1; }
 
-.episode-meta-overlay {
-    position: absolute; bottom: 0; left: 0; width: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%);
-    padding: 8px;
-}
-.ep-tag { font-size: 8pt; color: #e50914; font-weight: bold; }
-.ep-title { font-size: 10pt; font-weight: bold; color: #fff; margin-top: 1px; }
+.ep-title { font-size: 10pt; font-weight: bold; color: #fff; }
 
-.slider-arrow {
-    position: absolute; top: 0; bottom: 0; width: 35px;
-    background-color: rgba(0,0,0,0.7); border: none; color: #fff;
-    font-size: 14pt; cursor: pointer; z-index: 5;
-}
-.arrow-left { left: 0; border-radius: 0 4px 4px 0; }
-.arrow-right { right: 0; border-radius: 4px 0 0 4px; }
-
-/* MODALES GENERALES */
-.modal, .upcoming-modal {
-    display: none; position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.85); z-index: 2000;
-}
+/* REPRODUCTOR MODAL COMPLETO */
 .modal-content {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 100%; max-width: 900px; background-color: #000; padding: 10px;
+    width: 95%; max-width: 950px; background-color: #000; padding: 10px;
 }
-.upcoming-content {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    background-color: #222; border-radius: 6px; padding: 25px;
-    width: 85%; max-width: 400px; text-align: center;
-    border: 1px solid #333;
-}
-.upcoming-badge {
-    background-color: #ffaa00; color: #000; font-size: 8pt;
-    font-weight: bold; padding: 3px 8px; border-radius: 3px;
-    display: inline-block; margin-bottom: 10px;
-}
-.close-modal, .close-upcoming-btn {
-    background-color: #e50914; color: #fff; border: none;
-    padding: 8px 14px; font-weight: bold; border-radius: 4px; cursor: pointer;
-}
-.close-upcoming-btn { background-color: #fff; color: #000; font-size: 10pt; padding: 8px 20px; }
-.close-upcoming-btn:hover { background-color: #e50914; color: #fff; }
+.player-header-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 
-.video-wrapper { position: relative; width: 100%; padding-top: 56.25%; }
-.video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; }
-.modal-title { font-size: 11pt; margin-bottom: 10px; color: #aaa; }
+.video-wrapper { position: relative; width: 100%; padding-top: 56.25%; background-color: #000; }
+.video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-/* CONTENEDORES DE INFORMACIÓN, RELEASES Y REDES */
-.info-card, .releases-card, .more-card {
+/* BOTÓN SIGUIENTE EPISODIO */
+.netflix-next-btn {
+    position: absolute; bottom: 50px; right: 20px;
+    background-color: rgba(255, 255, 255, 0.9); color: #000;
+    padding: 8px 16px; border-radius: 4px; cursor: pointer;
+    z-index: 2500; display: none; /* Javascript */
+}
+.netflix-next-btn:hover { background-color: #e50914; color: #fff; }
+
+/* CONTENEDOR EXCLUSIVO PARA IFRAMES PANTALLA COMPLETA */
+.iframe-section-container {
+    width: 100vw;
+    height: calc(100vh - 70px);
+    overflow: hidden;
+}
+.embedded-web-view { width: 100%; height: 100%; border: none; }
+
+/* TARJETAS INFORMATIVAS Y DE CONTACTO */
+.info-card, .more-card {
     background-color: #1c1c1c; padding: 25px; border-radius: 8px;
-    max-width: 700px; margin: 15px auto; border: 1px solid #2d2d2d;
+    max-width: 650px; margin: 10px auto; border: 1px solid #2d2d2d;
 }
-.subtitle { color: #808080; font-style: italic; margin-bottom: 18px; font-size: 10pt; }
+.info-body p { font-size: 10.5pt; color: #d3d3d3; margin-bottom: 10px; }
 
-.info-body h3 { font-size: 12pt; color: #e50914; margin: 15px 0 6px 0; }
-.info-body p { font-size: 10.5pt; color: #d3d3d3; line-height: 1.5; margin-bottom: 10px; }
-.highlight-info-text { margin-top: 20px; background-color: #262626; padding: 10px; border-radius: 4px; border-left: 3px solid #e50914; }
+.highlight-info-text { margin-top: 15px; background-color: #262626; padding: 10px; border-radius: 4px; border-left: 3px solid #e50914; }
 
-.releases-body p { font-size: 11pt; color: #ccc; margin-bottom: 15px; line-height: 1.4; }
-.release-action-btn {
-    display: inline-block; background-color: #238636; color: #fff;
-    text-decoration: none; padding: 12px 20px; border-radius: 5px;
-    font-weight: bold; font-size: 11pt; margin-top: 10px; transition: background 0.2s;
+.contact-info-block { margin-top: 25px; border-top: 1px solid #333; padding-top: 15px; }
+.contact-email-btn {
+    display: inline-block; background-color: #fff; color: #000;
+    text-decoration: none; padding: 10px 20px; border-radius: 4px;
+    font-weight: bold; margin-top: 10px;
 }
-.release-action-btn:hover { background-color: #2ea043; }
+.contact-email-btn:hover { background-color: #eee; }
 
-/* REPOSITORIO DE ENLACES DE REDES */
-.links-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+/* REDES */
+.links-grid { display: grid; gap: 10px; margin-top: 10px; }
 .social-link {
-    display: block; padding: 14px; border-radius: 6px; text-decoration: none;
-    color: #fff; font-weight: bold; font-size: 11pt; transition: transform 0.2s;
+    display: block; padding: 12px; border-radius: 6px; text-decoration: none; color: #fff; font-weight: bold;
 }
-.social-link:hover { transform: translateX(5px); }
 .yt { background-color: #c4302b; }
 .tt { background-color: #010101; border: 1px solid #333; }
 .fb { background-color: #3b5998; }
-.icon-media { margin-right: 10px; font-size: 13pt; }
-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    padding: 10px 0;
-}
-
-.slider-row::-webkit-scrollbar {
-    display: none;
-}
-
-/* MINIATURAS USANDO TU PÓSTER */
-.episode-card {
-    display: inline-block;
-    width: 240px;
-    height: 140px;
-    background-color: #2f2f2f;
-    margin-right: 12px;
-    border-radius: 6px;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-}
-
-.episode-card:hover {
-    transform: scale(1.06);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.8);
-    z-index: 10;
-}
-
-/* Inyección de tu póster en miniatura para cada capítulo */
-.thumbnail-poster-bg {
-    width: 100%;
-    height: 100%;
-    background-image: url('poster-Maicol-adventure.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.4; /* Sutil para que resalte el texto del capítulo */
-    transition: opacity 0.3s ease;
-}
-
-.episode-card:hover .thumbnail-poster-bg {
-    opacity: 0.7; /* Se ilumina al pasar el dedo o el mouse */
-}
-
-.card-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.2) 100%);
-    padding: 12px;
-    display: table;
-}
-
-.card-text-wrapper {
-    display: table-cell;
-    vertical-align: bottom;
-}
-
-.episode-number {
-    font-size: 9pt;
-    color: #e50914;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.episode-name {
-    font-size: 12pt;
-    font-weight: bold;
-    color: #fff;
-    margin-top: 1px;
-    white-space: normal;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-}
-
-/* BOTONES FLECHA SLIDER */
-.arrow-btn {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 40px;
-    background-color: rgba(0, 0, 0, 0.4);
-    border: none;
-    color: #fff;
-    font-size: 18pt;
-    cursor: pointer;
-    z-index: 5;
-    transition: background-color 0.2s;
-    display: block;
-}
-
-.arrow-btn:hover { background-color: rgba(0, 0, 0, 0.8); }
-.left-arrow { left: 0; border-radius: 0 6px 6px 0; }
-.right-arrow { right: 0; border-radius: 6px 0 0 6px; }
-
-/* INFORMACIÓN Y MÁS */
-.info-card, .more-card {
-    background-color: #1c1c1c;
-    padding: 30px;
-    border-radius: 8px;
-    max-width: 750px;
-    margin: 20px auto;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-    border: 1px solid #2d2d2d;
-}
-
-.info-card h1 { font-size: 20pt; margin-bottom: 5px; }
-.subtitle { color: #808080; font-style: italic; margin-bottom: 15px; font-size: 11pt; }
-.info-body p { font-size: 11pt; line-height: 1.5; color: #d3d3d3; margin-bottom: 12px; }
-
-.more-card h2 { margin-bottom: 10px; font-size: 16pt; }
-.more-card p { color: #808080; margin-bottom: 20px; font-size: 11pt; }
-.external-link {
-    display: inline-block;
-    background-color: #e50914;
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-weight: bold;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    font-size: 11pt;
-}
-.external-link:hover { background-color: #b80710; }
-.github-btn { background-color: #2b3137; }
-.github-btn:hover { background-color: #24292e; }
-
-/* MODAL DEL REPRODUCTOR */
-.modal {
-    display: none; 
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.95);
-    z-index: 2000;
-}
-
-.modal-content {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 92%;
-    max-width: 900px;
-    background-color: #000;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 0 25px rgba(229,9,24,0.4);
-}
-
-.close-modal {
-    background-color: #e50914;
-    color: #fff;
-    border: none;
-    padding: 8px 14px;
-    font-weight: bold;
-    border-radius: 4px;
-    float: right;
-    cursor: pointer;
-    margin-bottom: 12px;
-    font-size: 10pt;
-}
-
-.close-modal:hover { background-color: #b80710; }
-.modal-title { font-size: 12pt; margin-bottom: 12px; color: #b3b3b3; clear: both; font-weight: normal; }
-.video-wrapper { position: relative; width: 100%; padding-top: 56.25%; }
-.video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 4px; background-color: #000; }
-.card img {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    height: 90px;
-    object-fit: cover;
-    width: 100%;
-}
-
-.card span {
-    font-size: 0.9rem;
-    padding: 8px;
-    text-align: center;
-}
-
-/* Efecto visual al tocar el botón en la pantalla */
-.card:active {
-    transform: scale(0.95);
-    background: #e50914; /* Color rojo de realce */
-}
-
-/* Contenedor del Reproductor de Video */
-#video-player-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-video {
-    width: 100%;
-    height: 100%;
-}
-
-/* Botón flotante para cerrar el video táctilmente */
-.close-video-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(229, 9, 20, 0.8);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 10000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hidden {
-    display: none !important;
-}
