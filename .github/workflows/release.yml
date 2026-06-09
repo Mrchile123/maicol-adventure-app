@@ -3,7 +3,7 @@ name: Generar APK de Maicol Adventure
 on:
   push:
     tags:
-      - 'v*' # Se activa cuando creas una etiqueta de versión (ej. v1.3)
+      - 'v*' # Se activa de forma automática cuando creas una etiqueta de versión (ej: v1.5)
 
 jobs:
   build:
@@ -13,27 +13,53 @@ jobs:
     - name: 1. Descargar tu código de GitHub
       uses: actions/checkout@v4
 
-    - name: 2. Configurar Node.js
+    - name: 2. Configurar entorno de Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
 
-    - name: 3. Configurar Java (Obligatorio para Android)
+    - name: 3. Configurar entorno de Java (Obligatorio para compilación Android)
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: 4. Instalar dependencias del proyecto
-      run: npm install
-
-    - name: 5. Agregar y Sincronizar Plataforma Android
+    - name: 4. Instalar dependencias y Generador Automático de Iconos
       run: |
+        npm install
+        npm install @capacitor/assets --save-dev
+        # Genera los iconos leyendo Icon_app.png desde la raíz
+        npx capacitor-assets generate --android || true 
+
+    - name: 5. Inicializar Capacitor e Inyectar Plataforma Android
+      run: |
+        npx cap init "Maicol Adventure" "com.maicol.adventure" --web-dir=. || true
         npx cap add android || true
         npx cap sync android
 
-    - name: 6. Dar permisos al compilador de Android
+    - name: 6. Agregar Permiso de Pantalla en Pantalla (Picture-in-Picture)
+      run: |
+        # Este comando busca el archivo AndroidManifest.xml generado e introduce el permiso de PiP automáticamente
+        MANIFEST_PATH="./android/app/src/main/AndroidManifest.xml"
+        if [ -f "$MANIFEST_PATH" ]; then
+          sed -i '/android:name=".MainActivity"/a \            android:supportsPictureInPicture="true"' "$MANIFEST_PATH"
+          echo "Permiso supportsPictureInPicture inyectado con éxito."
+        fi
+
+    - name: 7. Otorgar permisos de ejecución al compilador Gradle
       run: chmod +x ./android/gradlew || true
+
+    - name: 8. Compilar proyecto y fabricar la APK de depuración
+      run: |
+        cd android
+        ./gradlew assembleDebug
+
+    - name: 9. Publicar la APK empaquetada en la pestaña Releases de GitHub
+      uses: softprops/action-gh-release@v2
+      with:
+        files: android/app/build/outputs/apk/debug/Maicol-adventure-app.apk
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: 7. Compilar y fabricar la APK
       run: |
