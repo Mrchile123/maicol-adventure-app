@@ -3,7 +3,7 @@ name: Generar APK de Maicol Adventure
 on:
   push:
     tags:
-      - 'v*' # Se activa cuando creas una etiqueta de versión (ej. v1.0)
+      - 'v*' # Se activa cuando creas una etiqueta de versión (ej. v1.3)
 
 jobs:
   build:
@@ -27,23 +27,22 @@ jobs:
     - name: 4. Instalar dependencias del proyecto
       run: npm install
 
-    - name: 5. Crear la base nativa de Android
-      run: npx cap add android || true # Evita fallas si la carpeta nativa ya existía
+    - name: 5. Agregar y Sincronizar Plataforma Android
+      run: |
+        npx cap add android || true
+        npx cap sync android
 
-    - name: 6. Inyectar código Web e imágenes en Android
-      run: npx cap sync android
+    - name: 6. Dar permisos al compilador de Android
+      run: chmod +x ./android/gradlew || true
 
-    - name: 7. Dar permisos al compilador de Android
-      run: chmod +x ./android/gradlew
-
-    - name: 8. Compilar y fabricar la APK
+    - name: 7. Compilar y fabricar la APK
       run: |
         cd android
         ./gradlew assembleDebug
 
-    - name: 9. Publicar la APK en la pestaña Releases de GitHub
+    - name: 8. Publicar la APK en la pestaña Releases de GitHub
       uses: softprops/action-gh-release@v2
       with:
-        files: android/app/build/outputs/apk/debug/app-debug.apk
+        files: android/app/build/outputs/apk/debug/Maicol-adventure-app.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
