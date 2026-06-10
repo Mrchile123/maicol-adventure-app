@@ -6,15 +6,25 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "KingEnterprise",
-  "license": "ISC",
+  "keywords": [
+    "maicol-adventure",
+    "hola-soy-king-orange",
+    "flipaclip",
+    "animation",
+    "series",
+    "kingventure",
+    "capacitor",
+    "android-app",
+    "apk",
+    "free-download"
+  ],
+  "author": "Maicol",
+  "license": "Apache-2.0",
   "dependencies": {
     "@capacitor/android": "^6.0.0",
     "@capacitor/core": "^6.0.0"
   },
   "devDependencies": {
-    "@capacitor/assets": "^3.0.0",
     "@capacitor/cli": "^6.0.0"
   }
 }
