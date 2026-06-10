@@ -3,72 +3,62 @@ name: Generar APK de Maicol Adventure
 on:
   push:
     tags:
-      - 'v*' # Se activa de forma automática cuando creas una etiqueta de versión (ej: v1.5)
+      - 'v*' # Se activa cuando creas una etiqueta de versión (ej: v1.7)
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    # 🔥 Forzamos al contenedor de GitHub a usar Node 24 para evitar la obsolescencia
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
     steps:
     - name: 1. Descargar tu código de GitHub
       uses: actions/checkout@v4
 
-    - name: 2. Configurar entorno de Node.js
+    - name: 2. Configurar entorno de Node.js a la versión 24
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '24' # 🔥 Cambiado de 20 a 24 para solucionar el error
 
-    - name: 3. Configurar entorno de Java (Obligatorio para compilación Android)
+    - name: 3. Configurar entorno de Java
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: 4. Instalar dependencias y Generador Automático de Iconos
+    - name: 4. Instalar dependencias y Generar Iconos
       run: |
         npm install
         npm install @capacitor/assets --save-dev
-        # Genera los iconos leyendo Icon_app.png desde la raíz
         npx capacitor-assets generate --android || true 
 
-    - name: 5. Inicializar Capacitor e Inyectar Plataforma Android
+    - name: 5. Inicializar Capacitor apuntando a carpeta www
       run: |
-        npx cap init "Maicol Adventure" "com.maicol.adventure" --web-dir=. || true
+        npx cap init "Maicol Adventure" "com.maicol.adventure" --web-dir=www || true
         npx cap add android || true
         npx cap sync android
 
-    - name: 6. Agregar Permiso de Pantalla en Pantalla (Picture-in-Picture)
+    - name: 6. Agregar Permiso de Pantalla en Pantalla (PiP)
       run: |
-        # Este comando busca el archivo AndroidManifest.xml generado e introduce el permiso de PiP automáticamente
         MANIFEST_PATH="./android/app/src/main/AndroidManifest.xml"
         if [ -f "$MANIFEST_PATH" ]; then
           sed -i '/android:name=".MainActivity"/a \            android:supportsPictureInPicture="true"' "$MANIFEST_PATH"
-          echo "Permiso supportsPictureInPicture inyectado con éxito."
+          echo "Permiso PiP inyectado con éxito."
         fi
 
-    - name: 7. Otorgar permisos de ejecución al compilador Gradle
+    - name: 7. Otorgar permisos al compilador Gradle
       run: chmod +x ./android/gradlew || true
 
-    - name: 8. Compilar proyecto y fabricar la APK de depuración
+    - name: 8. Compilar APK
       run: |
         cd android
         ./gradlew assembleDebug
 
-    - name: 9. Publicar la APK empaquetada en la pestaña Releases de GitHub
+    - name: 9. Publicar la APK en Releases
       uses: softprops/action-gh-release@v2
       with:
-        files: android/app/build/outputs/apk/debug/Maicol-adventure-app.apk
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: 7. Compilar y fabricar la APK
-      run: |
-        cd android
-        ./gradlew assembleDebug
-
-    - name: 8. Publicar la APK en la pestaña Releases de GitHub
-      uses: softprops/action-gh-release@v2
-      with:
-        files: android/app/build/outputs/apk/debug/Maicol-adventure-app.apk
+        files: android/app/build/outputs/apk/debug/app-debug.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
